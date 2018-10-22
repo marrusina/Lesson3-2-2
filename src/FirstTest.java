@@ -60,25 +60,20 @@ public class FirstTest {
         );
 
         List<WebElement> list_elements = element.findElements(By.id("org.wikipedia:id/page_list_item_container"));
-        int listCount = list_elements.size();
-        if (listCount > 1) {
-            waitForElementAndClick(
+        //int listCount = list_elements.size();
+        Assert.assertFalse("Not enough search results",list_elements.size()<=1);
+        Assert.assertTrue(list_elements.size()>1);
+                waitForElementAndClick(
                     By.id("org.wikipedia:id/search_close_btn"),
                     "Cannot find X to cancel search",
                     15
             );
+                 waitForElementPresent(
+                   By.xpath("//*[contains(@text,'Search…')]"),
+                   "Cannot find Search",
+                   5
+           );
 
-            waitForElementPresent(
-                    By.xpath("//*[contains(@text,'Search…')]"),
-                    "Cannot find Search",
-                    5
-            );
-
-        }
-        else
-        {
-            Assert.fail("You are looser");
-        }
     }
 
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
